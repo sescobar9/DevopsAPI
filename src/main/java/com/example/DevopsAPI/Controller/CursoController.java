@@ -39,10 +39,5 @@ public class CursoController {
         return "Curso eliminado";
     }
 
-    @GetMapping(value = "/curso/{cursoId}/profesores")
-    public Set<Profesor> getProfesoresDelCurso(@PathVariable long cursoId) {
-        Curso curso = cursoRepository.findById(cursoId).orElseThrow(() -> new RuntimeException("Curso no encontrado"));
-        return curso.getProfesores();
-    }
 
 }
