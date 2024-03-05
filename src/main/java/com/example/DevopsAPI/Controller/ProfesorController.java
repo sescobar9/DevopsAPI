@@ -51,10 +51,4 @@ public class ProfesorController {
         return "Profesor asociado con Curso";
     }
 
-    @GetMapping(value = "/profesor/{profesorId}/cursos")
-    public Set<Curso> getCursosDelProfesor(@PathVariable long profesorId) {
-        Profesor profesor = profesorRepository.findById(profesorId).orElseThrow(() -> new RuntimeException("Profesor no encontrado"));
-        return profesor.getCursos();
-    }
-
 }
