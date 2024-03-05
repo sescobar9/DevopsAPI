@@ -28,6 +28,7 @@ public class CursoController {
     public String actualizarCurso(@PathVariable long id, @RequestBody Curso curso){
         Curso actualizaCurso = cursoRepository.findById(id).get();
         actualizaCurso.setNombre_curso(curso.getNombre_curso());
+        actualizaCurso.setDecripcion(curso.getDecripcion());
         cursoRepository.save(actualizaCurso);
         return "Curso actualizado";
     }

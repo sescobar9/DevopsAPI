@@ -16,6 +16,9 @@ public class Profesor {
     @Column
     private String nombre_profesor;
 
+    @Column(unique = true)
+    private String email;
+
     @ManyToMany
     @JoinTable(
             name = "profesor_curso",
@@ -50,4 +53,12 @@ public class Profesor {
     public void setNombre_profesor(String nombre_profesor) {
         this.nombre_profesor = nombre_profesor;
     }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

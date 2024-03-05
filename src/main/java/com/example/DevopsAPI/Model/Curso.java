@@ -16,6 +16,9 @@ public class Curso {
     @Column
     private String nombre_curso;
 
+    @Column(length = 100)
+    private String decripcion;
+
     @ManyToMany(mappedBy = "cursos")
     @JsonIgnoreProperties("cursos")
     private Set<Profesor> profesores = new HashSet<>();
@@ -44,4 +47,11 @@ public class Curso {
         this.nombre_curso = nombre_curso;
     }
 
+    public String getDecripcion() {
+        return decripcion;
+    }
+
+    public void setDecripcion(String decripcion) {
+        this.decripcion = decripcion;
+    }
 }

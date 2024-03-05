@@ -32,6 +32,7 @@ public class ProfesorController {
     public String actualizarProfesor(@PathVariable long id, @RequestBody Profesor profesor){
         Profesor actualizaProfesor = profesorRepository.findById(id).get();
         actualizaProfesor.setNombre_profesor(profesor.getNombre_profesor());
+        actualizaProfesor.setEmail(profesor.getEmail());
         profesorRepository.save(actualizaProfesor);
         return "Profesor actalizado";
     }
