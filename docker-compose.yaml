@@ -1,33 +1,40 @@
-version: "3.8"
+vversion: "3.8"
 
 services:
   api:
-    networks:
-      - red-mysql
     build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/devops
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: santi2001
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - 8080:8080
-  db:
-    image: mysql:8.3.0
     networks:
       - red-mysql
+
+  db:
+    image: mysql:8.3.0
     environment:
-      MYSQL_DATABASE: 'devops'
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_PASSWORD: 'santi2001'
+      MYSQL_ROOT_PASSWORD: santi2001
+      MYSQL_DATABASE: devops
+    ports:
+      - "3306:3306"
     healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h db -u root -p santi2001" ]
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u root --password=santi2001" ]
+      interval: 10s
       timeout: 20s
       retries: 10
-    ##ports:
-      ##- "3308:3308"
     volumes:
       - db-data:/var/lib/mysql
       - ./base_de_datos.sql:/docker-entrypoint-initdb.d/base_de_datos.sql
+    networks:
+      - red-mysql
+
 networks:
   red-mysql:
+
 volumes:
   db-data:
