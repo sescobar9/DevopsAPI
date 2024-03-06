@@ -1,17 +1,33 @@
-version: '3.8'
+version: "3.8"
+
 services:
-  app:
+  api:
+    networks:
+      - red-mysql
     build: .
-    ports:
-      - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
   db:
-    image: mysql:8.0
+    image: mysql:8.3.0
+    networks:
+      - red-mysql
     environment:
       MYSQL_DATABASE: 'devops'
-      MYSQL_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_PASSWORD: 'santi2001'
-      MYSQL_ROOT_PASSWORD: 'santi2001'
-    ports:
-      - "3306:3306"
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h db -u root -p santi2001" ]
+      timeout: 20s
+      retries: 10
+    ##ports:
+      ##- "3308:3308"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./base_de_datos.sql:/docker-entrypoint-initdb.d/base_de_datos.sql
+networks:
+  red-mysql:
+volumes:
+  db-data:
