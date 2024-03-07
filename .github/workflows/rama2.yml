@@ -19,7 +19,7 @@ jobs:
           cache: maven
 
       - name: Levantar BD
-        run: docker compose up -d
+        run: docker compose up -d db
 
       - name: Pruebas
         run: mvn test
