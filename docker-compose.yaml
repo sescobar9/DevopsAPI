@@ -1,43 +1,34 @@
-version: "3.8"
-
+version: '3.8'
 services:
-  api:
-    build: .
+  app:
+    container_name: devops-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["java", "-Ddebug", "-jar", "DevopsAPI-0.0.1-SNAPSHOT.jar"]
     ports:
-      - "8080:8080"
-    command: tail -f /dev/null
+      - "8081:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/devops
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: santi2001
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/devops?useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=santi2001
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
-      - red-mysql
-
+      - app-network
   db:
-    image: mysql:8.3.0
-    environment:
-      MYSQL_ROOT_PASSWORD: santi2001
-      MYSQL_DATABASE: devops
-    expose:
-    - '3306'
+    container_name: postgres
+    image: postgres:13
     ports:
-      - "3308:3306"
-    healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u root --password=santi2001" ]
-      interval: 10s
-      timeout: 20s
-      retries: 10
-    volumes:
-      - db-data:/var/lib/mysql
-      - ./base_de_datos.sql:/docker-entrypoint-initdb.d/base_de_datos.sql
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=santi2001
+      - POSTGRES_DB=devops
     networks:
-      - red-mysql
+      - app-network
 
 networks:
-  red-mysql:
-
-volumes:
-  db-data:
+  app-network:
+    driver: bridge
