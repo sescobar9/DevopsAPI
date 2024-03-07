@@ -17,3 +17,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
+
+      - name: Pruebas
+        run: mvn test
+        with:
