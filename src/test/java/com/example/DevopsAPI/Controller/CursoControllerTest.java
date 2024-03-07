@@ -36,7 +36,7 @@ public class CursoControllerTest {
 
     @Test
     public void getCursos_ShouldReturnAllCursos() throws Exception {
-        Curso curso1 = new Curso(); // Suponiendo que tienes un constructor por defecto
+        Curso curso1 = new Curso();
         curso1.setNombre_curso("Matemáticas");
         Curso curso2 = new Curso();
         curso2.setNombre_curso("Literatura");
