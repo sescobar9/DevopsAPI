@@ -18,5 +18,8 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Levantar BD
+        run: docker compose up -d
+
       - name: Pruebas
         run: mvn test
