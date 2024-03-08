@@ -50,5 +50,4 @@ public class ProfesorController {
         profesorRepository.save(profesor);
         return "Profesor asociado con Curso";
     }
-
 }
