@@ -18,8 +18,9 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      - name: Levantar BD
-        run: docker compose up -d db
+      - name: Base de datos pruebas
+        working-directory: src/test/database/
+        run: docker compose up -d
 
       - name: Pruebas
         run: mvn test
