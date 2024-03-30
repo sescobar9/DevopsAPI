@@ -19,7 +19,7 @@ jobs:
           cache: maven
 
       - name: Base de datos pruebas
-        working-directory: src/test/database/docker-compose.yaml
+        working-directory: src/test/database/
         run: docker compose up -d
 
       - name: Pruebas
