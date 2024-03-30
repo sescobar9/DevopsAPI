@@ -18,5 +18,9 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Base de datos pruebas
+        working-directory: src/test/database/docker-compose.yaml
+        run: docker compose up -d
+
       - name: Pruebas
         run: mvn test
