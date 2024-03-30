@@ -22,4 +22,4 @@ networks:
     name: public
   private:
     name: private
-#psql -U devops -d devops -a -f "/backups/devops
+#psql -U devops -d devops -a -f "/backups/devops--
