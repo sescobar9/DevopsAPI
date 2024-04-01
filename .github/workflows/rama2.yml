@@ -22,5 +22,11 @@ jobs:
         working-directory: src/test/database/
         run: docker compose up -d
 
+      - name: Set up Environment Variables
+        run: |
+        echo "ELEPHANTSQL_URL=${{ secrets.ELEPHANTSQL_URL }}" >> $GITHUB_ENV
+        echo "ELEPHANTSQL_USER=${{ secrets.ELEPHANTSQL_USER }}" >> $GITHUB_ENV
+        echo "ELEPHANTSQL_PASSWORD=${{ secrets.ELEPHANTSQL_PASSWORD }}" >> $GITHUB_ENV
+
       - name: Pruebas
         run: mvn test
