@@ -79,7 +79,7 @@ public class CursoControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"nombre_curso\":\"Matemáticas Avanzadas\",\"decripcion\":\"Curso avanzado de matemáticas\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Curso actualizado"));
+                .andExpect(content().string("el Curso actualizado"));
 
         verify(cursoRepository).save(any(Curso.class));
     }
@@ -92,7 +92,7 @@ public class CursoControllerTest {
 
         mockMvc.perform(delete("/eliminarcurso/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Curso eliminado"));
+                .andExpect(content().string("el Curso eliminado"));
 
         verify(cursoRepository).delete(cursoToDelete);
     }
