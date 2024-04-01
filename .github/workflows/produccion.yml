@@ -1,9 +1,9 @@
-name: Pipeline Desarrollo
+name: Pipeline Produccion
 
 on:
   push:
     branches:
-      - rama2
+      - master
 jobs:
   test:
     runs-on: ubuntu-latest
