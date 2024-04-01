@@ -92,7 +92,7 @@ public class CursoControllerTest {
 
         mockMvc.perform(delete("/eliminarcurso/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Curso eliminado"));
+                .andExpect(content().string("el Curso eliminado"));
 
         verify(cursoRepository).delete(cursoToDelete);
     }

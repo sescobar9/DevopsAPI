@@ -36,7 +36,7 @@ public class CursoController {
     public String eliminarCurso(@PathVariable long id){
         Curso eliminaCurso = cursoRepository.findById(id).get();
         cursoRepository.delete(eliminaCurso);
-        return "Curso eliminado";
+        return "el Curso eliminado";
     }
 
 
