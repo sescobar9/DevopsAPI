@@ -30,13 +30,13 @@ public class CursoController {
         actualizaCurso.setNombre_curso(curso.getNombre_curso());
         actualizaCurso.setDecripcion(curso.getDecripcion());
         cursoRepository.save(actualizaCurso);
-        return "Curso actualizado";
+        return "el Curso actualizado";
     }
     @DeleteMapping(value= "eliminarcurso/{id}")
     public String eliminarCurso(@PathVariable long id){
         Curso eliminaCurso = cursoRepository.findById(id).get();
         cursoRepository.delete(eliminaCurso);
-        return "Curso eliminado";
+        return "el Curso eliminado";
     }
 
 
