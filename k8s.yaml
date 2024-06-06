@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: 469483657726.dkr.ecr.us-east-1.amazonaws.com/devops:latest
+          ports:
+            - containerPort: 8080  # Corregido de 'containerPorts' a 'containerPort'
+
+---
+
+apiVersion: v1
+kind: Service  # Corregido 'Kind' a 'kind'
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
