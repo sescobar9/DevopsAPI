@@ -3,7 +3,6 @@ on: [push, pull_request]
 
 jobs:
       - name: Terraform PROD Deployment
-
         on:
           push:
             branches:
