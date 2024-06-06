@@ -69,19 +69,44 @@ jobs:
 
       - name: Pruebas
         run: mvn test
-      
-      - name: Deploy to Elastic Beanstalk
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Terraform PROD Deployment
+
+        on:
+          push:
+            branches:
+              - rama2
+          workflow_dispatch:
+            branches:
+              - rama2
+
+        permissions:
+          contents: read
+          issues: write
+      - jobs:
+        gcp-deploy:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Checkout Git Repository
+              uses: actions/checkout@v3.0.0
+              with:
+                fetch-depth: 0
+
+            - id: "auth"
+              name: "Authenticate to Google Cloud"
+              uses: "google-github-actions/auth@v1"
+              with:
+                credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
+                create_credentials_file: true
+                export_environment_variables: true
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.5.7
+      - name: Terraform init and validate
         run: |
-          # Instala la CLI de EB y zip, necesarios para el despliegue.
-          pip install awsebcli --upgrade
-          sudo apt-get install zip
-          # Empaqueta tu aplicación. Ajusta este comando según la estructura de tu proyecto.
-          zip -r my-application.zip . -x "*.git*" "tests/*" "ci/*"
-          # Inicializa el directorio con la configuración de EB. Asegúrate de estar en el directorio raíz de tu proyecto.
-          eb init nombre-de-tu-aplicacion -r $AWS_DEFAULT_REGION -p plataforma-de-ejecucion
-          # Despliega tu aplicación. Asegúrate de reemplazar 'nombre-de-tu-aplicacion-environment' con el nombre de tu entorno.
-          eb deploy nombre-de-tu-aplicacion-environment
+          terraform init
+
+      - name: Terraform plan
+        run: |
+          terraform plan
