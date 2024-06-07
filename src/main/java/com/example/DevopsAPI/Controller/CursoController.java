@@ -21,7 +21,7 @@ public class CursoController {
     @PostMapping(value = "/guardarcurso")
     public String guardarCurso(@RequestBody Curso curso){
         cursoRepository.save(curso);
-        return "Curso Guardado";
+        return "Cursos Guardados";
     }
 
     @PutMapping(value = "/actualizarcurso/{id}")
