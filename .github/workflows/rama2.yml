@@ -36,13 +36,6 @@ jobs:
         with:
           terraform_version: 1.5.7
 
-      - name: Remove .terraform directory
-        run: rm -rf .terraform
-
-      - name: Ensure provider directory permissions
-        run: |
-          chmod -R +x .terraform
-
       - name: Terraform init and validate
         run: |
           terraform init
